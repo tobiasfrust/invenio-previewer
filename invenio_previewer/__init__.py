@@ -153,6 +153,8 @@ record:
 ...    ObjectVersion
 >>> tmpdir = tempfile.mkdtemp()
 >>> loc = Location(name='local', uri=tmpdir, default=True)
+>>> db.session.add(loc)
+>>> db.session.commit()
 >>> bucket = Bucket.create(loc)
 >>> rb = RecordsBuckets(record_id=record.id, bucket_id=bucket.id)
 >>> db.session.add(rb)
