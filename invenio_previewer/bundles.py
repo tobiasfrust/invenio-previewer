@@ -79,13 +79,17 @@ pdfjs_css = Bundle(
 pdfjs_js = Bundle(
     NpmBundle(
         npm={
-            "pdfjs-dist": "1.4.192",
+            "webpack": "~3.10.0",
+            "worker-loader": "~1.0.0",
+            "node-ensure": "~0.0.0",
+            "pdfjs-dist": "1.10.97",
         }
     ),
     "node_modules/pdfjs-dist/web/compatibility.js",
     "node_modules/pdfjs-dist/build/pdf.js",
     "js/pdfjs/l10n.js",
     "js/pdfjs/viewer.js",
+    filters="uglifyjs",
     output='gen/pdfjs.%(version)s.js',
 )
 """JavaScript bundle for PDFjs previewer."""
