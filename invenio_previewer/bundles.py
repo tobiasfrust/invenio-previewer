@@ -79,7 +79,6 @@ pdfjs_css = Bundle(
 pdfjs_js = Bundle(
     NpmBundle(
         npm={
-            "webpack": "~3.10.0",
             "worker-loader": "~1.0.0",
             "node-ensure": "~0.0.0",
             "pdfjs-dist": "1.10.97",
