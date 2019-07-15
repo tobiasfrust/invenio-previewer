@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2015, 2016 CERN.
+# Copyright (C) 2015-2019 CERN.
 #
-# Invenio is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Invenio is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-#
-# In applying this license, CERN does not
-# waive the privileges and immunities granted to it by virtue of its status
-# as an Intergovernmental Organization or submit itself to any jurisdiction.
+# Invenio is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
 
 addons:
   apt:
@@ -45,12 +29,11 @@ env:
 python:
   - "2.7"
   - "3.5"
-  - "pypy"
 
 matrix:
   fast_finish: true
   allow_failures:
-    - python: pypy
+    - env: REQUIREMENTS=devel
 
 before_install:
   - "travis_retry pip install --upgrade pip setuptools py"
@@ -72,3 +55,14 @@ script:
 
 after_success:
   - coveralls
+
+deploy:
+  provider: pypi
+  user: inveniosoftware
+  password:
+    secure: "D0nJxy6c+YAIQCIy29cf0XkhzRA2zhI9TDFXi9GV+s5qcfgR8ds58CDgAdj/ErdvkWA5VBC13BS+668LWMtFIQENZ44Onc3J2UkiF8vHyzChu0FqtgCMT/qbFNeUIlJ6lwTsgAcWnQkh2jt3yTOvnbRuNdIKViyJpd6TWkKHl4khB7s4PWtyXsV7DshZhykAGqCFU2jizt1JDq2EuHNcvq79CjSwaGKdOBWWYzj6PalhOKae6/7bmg+4wQ+p0OwigIrI0irbes+xnVXEVmWalYTpLiLQaWmUrPKHpL0F6TVjFHPMYscFtp+d9Z+ROHAjsc5KN3uJmlrS6cGSHOVFxWBF6xnrJxWGd3hQboZXEvrzJno1R6pXTU7rh3/LINgXY+zS75GUPSIBvkHcvdlW6Ph8zTHE2FR67kUfFGv4ImwElMj2yt+B11n0DxdsKlSevduelnGLSeJWutow3VHetAIMXDBnHm1OYhOtqpHpmuulyX5tnbOcsDLnXPNX9GUUKZ3pUEjmINwWjfvEbV8fvfyPGl4gSsM7a+rtjlbX6CTA2GSPJaJl9LzBq5Ocnwt85iT/3IXtwiY4MEU3rwmNSI5SpTgP+eZfmrOw22ji0NpSxsJoTpcZ7gPij6C0DXmpnvBXQVjYPBLtFnTHBk11K2ZFAzYefcQprmdk8WIVEPU="
+  distributions: "compile_catalog sdist bdist_wheel"
+  on:
+    tags: true
+    python: "2.7"
+    condition: $REQUIREMENTS = release

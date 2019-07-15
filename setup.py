@@ -1,31 +1,14 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2016 CERN.
+# Copyright (C) 2016-2019 CERN.
 #
-# Invenio is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Invenio is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-#
-# In applying this license, CERN does not
-# waive the privileges and immunities granted to it by virtue of its status
-# as an Intergovernmental Organization or submit itself to any jurisdiction.
+# Invenio is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
 
 """Invenio module for previewing files."""
 
 import os
-import sys
 
 from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand  # noqa
@@ -35,16 +18,15 @@ history = open('CHANGES.rst').read()
 
 tests_require = [
     'check-manifest>=0.25',
-    'coverage>=4.0',
-    'invenio-db[versioning]>=1.0.0b3',
-    'invenio-records-files>=1.0.0a3',
-    'isort>=4.2.2',
+    'coverage>=4.5.3',
+    'invenio-db[versioning]>=1.0.2',
+    'invenio-records-files>=1.0.0a11',
+    'isort>=4.3.4',
     'mock>=1.3.0',
     'pydocstyle>=1.0.0',
-    'pytest-cache>=1.0',
-    'pytest-cov>=1.8.0',
+    'pytest-cov>=2.7.1',
     'pytest-pep8>=1.0.6',
-    'pytest>=2.8.0',
+    'pytest>=4.6.4,<5.0.0',
 ]
 
 extras_require = {
@@ -52,8 +34,8 @@ extras_require = {
         'Sphinx>=1.5.1',
     ],
     'files': [
-        'invenio-files-rest>=1.0.0a9',
-        'invenio-records-files>=1.0.0a8',
+        'invenio-files-rest>=1.0.0a23',
+        'invenio-records-files>=1.0.0a11',
     ],
     'tests': tests_require,
 }
@@ -72,12 +54,13 @@ install_requires = [
     'Flask-BabelEx>=0.9.3',
     'mistune>=0.7.2',
     'cchardet>=1.0.0',
-    'invenio-assets>=1.0.0b7',
-    'invenio-pidstore>=1.0.0b1',
-    'invenio-records-ui>=1.0.0a8',
+    'invenio-assets>=1.1.2',
+    'invenio-pidstore>=1.0.0',
+    'invenio-records-ui>=1.0.1',
     'ipython>=4.1.0',
     'nbconvert[execute]>=4.1.0',
     'nbformat>=4.0.1',
+    'tornado>=4.1,<=5.1.1',  # required by nbconvert -> jupyter-client
 ]
 
 packages = find_packages()
@@ -94,7 +77,7 @@ setup(
     description=__doc__,
     long_description=readme + '\n\n' + history,
     keywords='invenio previewer',
-    license='GPLv2',
+    license='MIT',
     author='CERN',
     author_email='info@inveniosoftware.org',
     url='https://github.com/inveniosoftware/invenio-previewer',
@@ -110,16 +93,19 @@ setup(
             'messages = invenio_previewer',
         ],
         'invenio_assets.bundles': [
-            'previewer_csv_js = invenio_previewer.bundles:csv_previewer_js',
-            'previewer_pdfjs_css = invenio_previewer.bundles:pdfjs_css',
-            'previewer_pdfjs_js = invenio_previewer.bundles:pdfjs_js',
-            'previewer_fullscreen_js '
-            '= invenio_previewer.bundles:fullscreen_js',
-            'previewer_prism_js '
-            '= invenio_previewer.bundles:prism_js',
-            'previewer_prism_css '
-            '= invenio_previewer.bundles:prism_css',
+            'previewer_theme.css = '
+            'invenio_previewer.bundles:previewer_base_css',
+            'previewer_theme.js = invenio_previewer.bundles:previewer_base_js',
+            'd3_csv.js = invenio_previewer.bundles:csv_previewer_js',
+            'pdfjs_css.css = invenio_previewer.bundles:pdfjs_css',
+            'pdfjs_js.js = invenio_previewer.bundles:pdfjs_js',
+            'fullscreen_js.js = invenio_previewer.bundles:fullscreen_js',
+            'prism_js.js = invenio_previewer.bundles:prism_js',
+            'prism_css.css = invenio_previewer.bundles:prism_css',
         ],
+        'invenio_assets.webpack': {
+            'invenio_previewer_theme = invenio_previewer.webpack:previewer'
+        },
         'invenio_previewer.previewers': [
             'csv_dthreejs = invenio_previewer.extensions.csv_dthreejs',
             'json_prismjs = invenio_previewer.extensions.json_prismjs',
@@ -139,7 +125,7 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
@@ -149,7 +135,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
     ],
 )

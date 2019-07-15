@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2015, 2016 CERN.
+# Copyright (C) 2015-2019 CERN.
 #
-# Invenio is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Invenio is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-#
-# In applying this license, CERN does not
-# waive the privileges and immunities granted to it by virtue of its status
-# as an Intergovernmental Organization or submit itself to any jurisdiction.
+# Invenio is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
 
 """Package configuration."""
 
@@ -55,12 +39,54 @@ PREVIEWER_PREFERENCE = [
 """Decides which previewers are available and their priority."""
 
 PREVIEWER_ABSTRACT_TEMPLATE = 'invenio_previewer/abstract_previewer.html'
+"""Parent template used by the available previewers."""
 
-PREVIEWER_BASE_CSS_BUNDLES = ['invenio_theme_css']
+PREVIEWER_BASE_CSS_BUNDLES = ['previewer_theme.css']
 """Basic bundle which includes Font-Awesome/Bootstrap."""
 
-PREVIEWER_BASE_JS_BUNDLES = ['invenio_theme_js']
+PREVIEWER_BASE_JS_BUNDLES = ['previewer_theme.js']
 """Basic bundle which includes Bootstrap/jQuery."""
 
 PREVIEWER_RECORD_FILE_FACOTRY = None
 """Factory for extracting files from records."""
+
+PREVIEWER_ASSETS_USE_WEBPACK = True
+"""If false, flask assets will be used for assets build."""
+
+PREVIEWER_ALLOWED_TAGS = [
+    'a',
+    'abbr',
+    'acronym',
+    'b',
+    'blockquote',
+    'br',
+    'code',
+    'div',
+    'em',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'i',
+    'li',
+    'ol',
+    'p',
+    'pre',
+    'span',
+    'strike',
+    'strong',
+    'sub',
+    'sup',
+    'u',
+    'ul',
+]
+"""List of allowed tags used to sanitize HTML output for previewers."""
+
+PREVIEWER_ALLOWED_ATTRS = {
+    '*': ['class'],
+    'a': ['href', 'title', 'name', 'class', 'rel'],
+    'abbr': ['title'],
+    'acronym': ['title'],
+}
+"""List of allowed attributes used to sanitize HTML output for previewers."""
